@@ -21,7 +21,6 @@ void Divide();
 void Expression();
 
 
-
 /***************************************************************/
 /* Read New Character From Input Stream */
 void GetChar() {
@@ -103,9 +102,19 @@ void EmitLn(const char* s) {
 
 /* Parse and Translate a Math Factor */
 void Factor() {
+    if (Look == '(') {
+        Match('(');
+        Expression();
+        Match(')');
+    } else {
+        char num[20];
+        sprintf(num, "MOVE #%c,D0", GetNum());
+        EmitLn(num);
+    } 
+    /*
     char num[20];
     sprintf(num, "MOVE #%c,D0", GetNum());    
-    EmitLn(num);
+    EmitLn(num);*/
 }
 
 /* Recognize and Translate a Multiply */
@@ -158,10 +167,19 @@ void Subtract() {
     EmitLn("NEG D0");
 }
 
+bool IsAddop(char c) {
+    return (c == '+' || c == '-');
+}
+
 /* Parse and Translate a Math Expression */
 void Expression() {
-    Term();
-    while (Look == '+' || Look == '-') {
+    // Term();
+    if (IsAddop(Look)){
+        EmitLn("CLR D0");
+    } else {
+        Term();
+    }
+    while (IsAddop(Look)) {
         EmitLn("MOVE D0,-(SP)"); /* -(SP) = push, (SP)+ = pop M68SK motorola */
 
         switch(Look) {
