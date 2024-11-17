@@ -12,6 +12,14 @@
 
 /* Variable Declarations */
 char Look;      /* Lookahead Character */
+void Term();
+void Add();
+void Subtract();
+void Multiply();
+void Divide();
+void Expression();
+
+
 
 /***************************************************************/
 /* Read New Character From Input Stream */
@@ -104,7 +112,9 @@ void EmitLn(const char* s) {
 
 /* Parse and Translate a Math Factor */
 void Factor() {
-    EmitLn("MOVE #",GetNum(),",D0");
+    char num[20];
+    sprintf(num, "MOVE #%c,D0", GetNum());    
+    EmitLn(num);
 }
 
 /* Recognize and Translate a Multiply */
@@ -125,6 +135,8 @@ void Divide() {
 /**************************************************************/
 /* Parse and Translate a Math Expression */
 void Term() {
+    Factor();
+
     while (Look == '*' || Look == '/') {
         EmitLn("MOVE D0,-(SP) ");
         
@@ -137,7 +149,8 @@ void Term() {
                 break;
             default:
                 Expected("Mulop");
-    }
+        }   
+    }    
 }
 
 /* Recognize and Translate an Add */
@@ -185,7 +198,7 @@ void Init() {
 /* Main Program */
 int main() {
     Init();
-    Expression(); /* not sure if need this? */
+    Expression(); 
     return 0;
 }
 /***************************************************************/
