@@ -12,6 +12,7 @@
 
 /* Variable Declarations */
 char Look;      /* Lookahead Character */
+
 void Term();
 void Add();
 void Subtract();
@@ -27,20 +28,17 @@ void GetChar() {
     Look = getchar();
 }
 
-/***************************************************************/
 /* Report an Error */
 void Error(const char* s) {
     printf("\n\007Error: %s.\n", s);
 }
 
-/***************************************************************/
 /* Report Error and Halt */
 void Abort(const char* s) {
     Error(s);
     exit(1);
 }
 
-/***************************************************************/
 /* Report What Was Expected */
 void Expected(const char* s) {
     char buf[100];
@@ -48,7 +46,6 @@ void Expected(const char* s) {
     Abort(buf);
 }
 
-/***************************************************************/
 /* Match a Specific Input Character */
 void Match(char x) {
     if (Look == x) {
@@ -63,19 +60,16 @@ void Match(char x) {
     }
 }
 
-/***************************************************************/
 /* Recognize an Alpha Character */
 bool IsAlpha(char c) {
     return isalpha(c) != 0;
 }
 
-/***************************************************************/
 /* Recognize a Decimal Digit */
 bool IsDigit(char c) {
     return isdigit(c) != 0;
 }
 
-/***************************************************************/
 /* Get an Identifier */
 char GetName() {
     if (!IsAlpha(Look)) {
@@ -86,7 +80,6 @@ char GetName() {
     return result;
 }
 
-/***************************************************************/
 /* Get a Number */
 char GetNum() {
     if (!IsDigit(Look)) {
@@ -97,13 +90,11 @@ char GetNum() {
     return result;
 }
 
-/***************************************************************/
 /* Output a String with Tab */
 void Emit(const char* s) {
     printf("%c%s", TAB, s);
 }
 
-/***************************************************************/
 /* Output a String with Tab and CRLF */
 void EmitLn(const char* s) {
     Emit(s);
@@ -132,7 +123,6 @@ void Divide() {
     EmitLn("DIVS D1,D0");
 }
 
-/**************************************************************/
 /* Parse and Translate a Math Expression */
 void Term() {
     Factor();
