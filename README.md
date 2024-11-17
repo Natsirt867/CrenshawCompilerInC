@@ -8,7 +8,7 @@ This project follows Jack Crenshaw's "Let's Build a Compiler" tutorial series, w
 - Handles addition and subtraction operations
 - Handles multiplication and division operations
 - Handles operator precedence rules (BEDMAS, PEDMAS, BODMAS, etc)
-
+- Handles parentheses in expression & unary minus
 
 ## Building the Project
 gcc cradle.c -o compiler
